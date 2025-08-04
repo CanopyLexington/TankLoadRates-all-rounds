@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<title>Canopy Lawn Care</title>
+</head>
+<style>
+	/* Style sheet provides html formatting */
+	html { font-size: 16px; } /* Root size for rem scaling */
+	body { margin: 0 auto; padding: .5rem; max-width: 480px; font-family: 'Segoe UI', Arial, sans-serif; background-color: white;}
+
+	/* ===== Headings ===== */
+	h1 { color: #33AFFF; margin-bottom: 0rem; text-align:center; }
+	h2 { color: #33AFFF; margin-top: 0rem; margin-bottom: 0rem; text-align:center; }
+
+	/* ===== Paragraphs ===== */
+	p { font-size: 1.1rem; line-height: 1; color: black; margin-bottom: 0.2rem; }
+
+	/* ===== Tables ===== */
+	table { width: 100%; border-collapse: collapse; }
+		th, td { font-size: 1.1rem; text-align: left; padding: 0.5rem; border: 1px solid #ccc; }
+		th { color: white; background-color: #33AFFF; text-align: center; }
+		td { color: black; }
+
+	   .hiddenRow { display: none; }
+	   .hiddenColumn { display: none; }
+
+		/* ===== Table column widths ===== */
+	   .colProduct { width: 30%; }
+	   .colRate  { width: 10%; }
+	   .colLoadRate { width: 15%; }
+	   .colUnit { pad-left: 15px; width: 10%; }
+
+	.alignRight { text-align: right; }
+
+	/* ===== Inputs and Selects ===== */
+	input[type="text"] {  background-color:#FFFF00; font-size: 1rem; padding: 0.5rem; width: 50%; box-sizing: border-box;}
+
+	select { background-color: #FFFF00; font-size: 1rem; padding: 0.5rem; width: 50%; box-sizing: border-box; margin: 0 0 0.5rem 0; }
+
+	input[type="text"]:focus, select:focus { outline: 2px solid #0078D4;  }
+
+	label { font-size: 1rem; color:black; padding: 0.5rem;}
+
+	.errMessage { font-size: 1rem; color: red; margin: 0.5rem 0; }
+	.subTitle { color:#33AFFF; text-align: center; margin-top: 0rem; margin-bottom: 0.2rem; }
+	.dataContainer { text-align:left; }
+
+	@media (max-width: 480px) { #optItems { width: 50%; font-size: 16px; } }
+
+</style>
+
+<body>
+	<h1>Canopy Lawn Care</ h1>
+	<h2>Tank Load Rate by Product<h2>
+	<p class="subTitle">(Cool Season Program)</p><br />
+
+	<div class="dataContainer">
+	    <p>Enter Square Feet:</p>
+
+	  <input type="text" id="squareFeet" placeholder="Enter Square Feet" value="84000" style="align-items:left;" />
+	  <label for="squareFeet">Sq Ft</label>
+
+	  <div id="messageBox" class="errMessage">&nbsp;</div>
+
+	  <p>Choose a Product:</p>
+	  <select id="optItems" class="selectItems" onchange="filterRows(this.value); calculateLoadRate()">
+		 <option value="blank">Select ...</option>
+		 <option value="round1">Round 1</option>
+		 <option value="round2">Round 2</option>
+		 <option value="round3">Round 3</option>
+		 <option value="round4">Round 4</option>
+		 <option value="round5">Round 5</option>
+		 <option value="round6">Round 6</option>
+  		 <option value="round7">Round 7</option>
+		 <option value="fungicide1">Fungicide 1</option>
+		 <option value="fungicide2">Fungicide 2</option>
+		 <option value="fungicide3">Fungicide 3</option>
+	  </select><br />
+
+	  <table id="dataTable" border="1">
+		 <tr>
+			 <th class="colProduct">Product</th>
+			 <th class="hiddenColumn colRate">Rate</th>
+			 <th class="colLoadRate">Load Rate</th>
+			 <th class="colUnit">Unit</th>
+		</tr>
+		<tr class="round1">
+			<td>Triden Bionutrients 10-3-5</td>
+			<td class="hiddenColumn">15.00</td>
+			<td class="alignRight"></td>
+			<td>gal</td>
+		</tr>
+		<tr class="round1">
+			<td>Pre-Emergent Herbicide Prodiamine 4L</td>
+			<td class="hiddenColumn">0.60</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round1">
+			<td>Broadcast Post-Herbicide</td>
+			<td class="hiddenColumn">1.00</td>
+			<td class="alignRight"></td>
+		</tr>
+		<tr class="round2">
+			<td>Triden Bionutrients 20-4-6</td>
+			<td class="hiddenColumn">4.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round3">
+			<td>Triden Bionutrients 10-3-5</td>
+			<td class="hiddenColumn">8.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round3">
+			<td>Triden Bionutrients Restore</td>
+			<td class="hiddenColumn">0.01148</td>
+			<td class="alignRight"></td>
+			<td>lbs</td>
+		</tr>
+		<tr class="round3">
+			<td>Pre-Emergent Herbicide</td>
+			<td class="hiddenColumn">0.50</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round4">
+			<td>Triden Bionutrients 10-3-5</td>
+			<td class="hiddenColumn">8.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round5">
+			<td>Triden Bionutrients 10-3-5</td>
+			<td class="hiddenColumn">8.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round5">
+			<td>Triden Bionutrients Renew</td>
+			<td class="hiddenColumn">0.01148</td>
+			<td class="alignRight"></td>
+			<td>lbs</td>
+		</tr>
+		<tr class="round5">
+			<td>Broadcast Spray Post-Herbicide Quintessen</td>
+			<td class="hiddenColumn">1.45</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round5">
+			<td>Spot Spray MSO</td>
+			<td class="hiddenColumn">0.55</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round6">
+			<td>Triden Bionutrients 20-4-6</td>
+			<td class="hiddenColumn">4.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="round7">
+			<td>Triden Bionutrients 10-3-5</td>
+			<td class="hiddenColumn">12.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="fungicide1">
+			<td>Triden Bionutrients Active8</td>
+			<td class="hiddenColumn">6.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="fungicide1">
+			<td>Fungicide-Azoxy</td>
+			<td class="hiddenColumn">0.38</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="fungicide1">
+			<td>Triden Bionutrients Renew</td>
+			<td class="hiddenColumn">0.01148</td>
+			<td class="alignRight"></td>
+			<td>lbs</td>
+		</tr>
+		<tr class="fungicide2">
+			<td>Triden Bionutrients Active8</td>
+			<td class="hiddenColumn">6.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="fungicide2">
+			<td>Fungicide-Azoxy</td>
+			<td class="hiddenColumn">0.38</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="fungicide2">
+			<td>Triden Bionutrients Renew</td>
+			<td class="hiddenColumn">0.01148</td>
+			<td class="alignRight"></td>
+			<td>lbs</td>
+		</tr>
+		<tr class="fungicide3">
+			<td>Triden Bionutrients Active8</td>
+			<td class="hiddenColumn">6.00</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="fungicide3">
+			<td>Fungicide-Azoxy</td>
+			<td class="hiddenColumn">0.38</td>
+			<td class="alignRight"></td>
+			<td>fl oz</td>
+		</tr>
+		<tr class="fungicide3">
+			<td>Triden Bionutrients Renew</td>
+			<td class="hiddenColumn">0.01148</td>
+			<td class="alignRight"></td>
+			<td>lbs</td>
+		</tr>
+	  </table>
+	  </div>
+
+  <script type="text/javascript">
+    /* ===================================================================================
+       ===================================================================================
+    	Author:  Jerry Lowe
+    	Date:    July 22, 2025
+    	Purpose: To provide functions necessary to enter the square feet and select
+    	         a product category.  Once the product category is selected javascript
+    	         is used to calculate the load rate by product and display the calculated
+    	         load rate.
+
+    	         A hidden column in the table is used to store the rate for each product.
+	   ===================================================================================
+       ===================================================================================
+    */
+    /* ===================================================================================
+       Resets the dropdown box to blank and removes the products for that category.
+
+       -----------------------------------------------------------------------------------
+    */
+		function resetDropdown() {
+		  document.getElementById('optItems').value = "blank"; // Set it to your default value
+		  filterRows("blank");
+		}
+
+    /* ===================================================================================
+       Validates the square feet to check whether it is a number or not.
+
+       -----------------------------------------------------------------------------------
+    */
+		function validateInput() {
+			  const val = document.getElementById("squareFeet").value;
+			  const isValidNumber = !isNaN(val) && val !== "";
+			  const msgBox = document.getElementById("messageBox");
+
+			 if (isNaN(val) || val.trim() === "") {
+			 	if (val.trim() === "") {
+			 		msgBox.innerHTML = "Please enter a valid number and try again.";
+			 	} else {
+			 	    msgBox.innerHTML = "Invalid number!  Please enter a valid number and try again.";
+			 	}
+			    resetDropdown();
+			  } else {
+			    document.getElementById("messageBox").innerHTML = "&nbsp;";
+			  }
+			  document.getElementById("optItems").disabled = !isValidNumber;
+		}
+
+    /* ===================================================================================
+       This function filters products based upon the product category as Round 1, Round 2,
+       Round 3,Round 4, Round 5, Round 6, Round 7, Fungicide 1, Fungicide 2, and Fungicide 3.
+       -----------------------------------------------------------------------------------
+    */
+    function filterRows(group) {
+
+		  const allRows = document.querySelectorAll('table tr');
+		  allRows.forEach((row, index) => {
+			if (index === 0) {
+			  row.style.display = ''; // always show header row
+			} else {
+			  // show only matching rows or hide all if "blank"
+			  row.style.display = group === 'blank' ? 'none' :
+					 row.classList.contains(group) ? '' : 'none';
+			}
+		  });
+    }
+
+	/* --------------------------------------------------------------------------------
+	   This function calculates the load rate values based upon the hidden Rate column
+	      and the square feet entered.  Every time the square feet is changed it loops
+	      through each cell in the Rate column and calculates the load rate based upon
+	      the square feet entered.
+	   --------------------------------------------------------------------------------
+	 */
+    function calculateLoadRate() {
+	    const sqFeet = Number(document.getElementById('squareFeet').value);
+	    const table = document.getElementById('dataTable');
+
+	    for (let i = 1; i < table.rows.length; i++) {
+	      const rateCell = table.rows[i].cells[1];
+	      const resultCell = table.rows[i].cells[2];
+	      const resultUnit = table.rows[i].cells[3];
+	      const rate = Number(rateCell.textContent);
+	      switch (resultUnit.textContent) {
+	      	case "fl oz":
+	      	case "lbs":
+	      		result = sqFeet / 1000 * rate;
+	      		break;
+	      	case "gal":
+				result = sqFeet / 1000 * rate / 128;
+	      		break;
+	      	default:
+				result = ",";
+	      }
+	      resultCell.textContent = result.toFixed(2); // optional rounding
+	    }
+    }
+
+    // On page load, default to hiding all rows
+    window.addEventListener('DOMContentLoaded', () => {
+      	const dropdown = document.getElementById('optItems');
+      	filterRows(dropdown.value); // This will hide all data rows if "blank" is selected
+    });
+
+	// Listens for changes to the square feet and validates to ensure it is a number.
+	document.getElementById("squareFeet").addEventListener("input", validateInput);
+
+</script>
+</body>
+</html>
