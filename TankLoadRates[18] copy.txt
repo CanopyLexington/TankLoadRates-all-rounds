@@ -106,7 +106,7 @@
 			<td>Triden Bionutrients 20-4-6</td>
 			<td class="hiddenColumn">4.00</td>
 			<td class="alignRight"></td>
-			<td>fl oz</td>
+			<td>lbs</td>
 		</tr>
 		<tr class="round3">
 			<td>Triden Bionutrients 10-3-5</td>
@@ -160,7 +160,7 @@
 			<td>Triden Bionutrients 20-4-6</td>
 			<td class="hiddenColumn">4.00</td>
 			<td class="alignRight"></td>
-			<td>fl oz</td>
+			<td>lbs</td>
 		</tr>
 		<tr class="round7">
 			<td>Triden Bionutrients 10-3-5</td>
@@ -334,3 +334,4 @@
 </script>
 </body>
 </html>
+
